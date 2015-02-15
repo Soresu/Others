@@ -38,6 +38,7 @@ namespace TheEscapist.Champions
             skills.Add(wSkill);
             skills.Add(eSkill);
             skills.Add(rSkill);
+            //Jayce, Elise...
             skills.Add(q2Skill);
             skills.Add(w2Skill);
             skills.Add(e2Skill);
