@@ -46,7 +46,7 @@ namespace TheEscapist.Champions
 
         private static void LoadMenu()
         {
-            // Flee settings
+            // Escape settings
             Menu menuF = new Menu("Escape ", "Esettings");
             foreach (var skill in skills)
             {
@@ -55,7 +55,7 @@ namespace TheEscapist.Champions
                     menuF.AddItem(new MenuItem(skill.Spell.Instance.Name, skill.Spell.Instance.Name)).SetValue(true);
                 }
             }
-            menuF.AddItem(new MenuItem("flee", "Escape")).SetValue(new KeyBind("T".ToCharArray()[0], KeyBindType.Press));
+            menuF.AddItem(new MenuItem("EscapeB", "Escape")).SetValue(new KeyBind("T".ToCharArray()[0], KeyBindType.Press));
             Program._menu.AddSubMenu(menuF);
             // Misc Settings
             Menu menuM = new Menu("Misc ", "Msettings");
@@ -65,7 +65,7 @@ namespace TheEscapist.Champions
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
-            if (Program._menu.Item("flee").GetValue<KeyBind>().Active)
+            if (Program._menu.Item("EscapeB").GetValue<KeyBind>().Active)
             {
                 Orbwalking.Orbwalk(null, Game.CursorPos);
               var enemy =
@@ -84,7 +84,7 @@ namespace TheEscapist.Champions
 
         private static void CastSkill(Skill spell, Obj_AI_Hero enemy)
         {
-            //cant cast
+            //can't cast
             if (!spell.Spell.IsReady() || player.Mana < spell.Spell.Instance.ManaCost)
             {
                 return;
