@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.combos = new System.Windows.Forms.RichTextBox();
             this.Start = new System.Windows.Forms.Button();
@@ -214,8 +215,9 @@
             this.Controls.Add(this.Start);
             this.Controls.Add(this.combos);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Combo list Generator by Soresu";
+            this.Text = "Combolist Generator by Soresu";
             this.ResumeLayout(false);
 
         }
