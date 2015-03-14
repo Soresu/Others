@@ -1,0 +1,12 @@
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\bin\Debug\CombolistGenerator.exe.config
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\bin\Debug\CombolistGenerator.exe
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\bin\Debug\CombolistGenerator.pdb
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\obj\Debug\CombolistGenerator.csprojResolveAssemblyReference.cache
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\obj\Debug\CombolistGenerator.Properties.Resources.resources
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\obj\Debug\CombolistGenerator.csproj.GenerateResource.Cache
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\obj\Debug\CombolistGenerator.exe
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\obj\Debug\CombolistGenerator.pdb
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\bin\Debug\MahApps.Metro.dll
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\bin\Debug\System.Windows.Interactivity.dll
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\bin\Debug\MahApps.Metro.xml
+M:\Dropbox\LSharp\CombolistGenerator\CombolistGenerator\CombolistGenerator\obj\Debug\CombolistGenerator.Form1.resources
