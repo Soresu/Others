@@ -343,6 +343,55 @@ namespace CombolistGenerator
                     #endregion
 
                     break;
+
+                case 7:
+                   #region UserNameToPw
+                    asd = "";
+                    if (combos.InvokeRequired)
+                    {
+                        combos.Invoke(new MethodInvoker(delegate { asd = combos.Text; }));
+                    }
+                    else
+                    {
+                        asd = combos.Text;
+                    }
+                    if (asd == "")
+                    {
+                        if (combos.InvokeRequired)
+                        {
+                            combos.Invoke(
+                                new MethodInvoker(delegate { combos.Text = "There is a problem with the list"; }));
+                        }
+                        else
+                        {
+                            combos.Text = "There is a problem with the list";
+                        }
+                        return;
+                    }
+                    OutputFile = "";
+                    tmpstring = asd;
+                    lineReader = new LineReader(() => new StringReader(tmpstring));
+                    max = lineReader.Count();
+                    idx = 0;
+                    foreach (var line in lineReader)
+                    {
+                        if (backgroundWorker1.CancellationPending)
+                        {
+                            e.Cancel = true;
+                            SetText();
+                            return;
+                        }
+
+                         SaveSingleLine(line+":"+line);
+
+                        idx++;
+                        var percent = idx / max * 100;
+                        (sender as BackgroundWorker).ReportProgress((int) percent);
+                    }
+
+                    #endregion
+
+                    break;
             }
             SetText();
         }
@@ -509,6 +558,16 @@ namespace CombolistGenerator
                     MessageBox.Show("Unable to save the file");
                 }
             }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            backgroundWorker1.RunWorkerAsync(7);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            combos.Text = "";
         }
     }
 }
