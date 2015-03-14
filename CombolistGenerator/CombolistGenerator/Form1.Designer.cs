@@ -68,7 +68,7 @@
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(156, 23);
             this.Start.TabIndex = 2;
-            this.Start.Text = "Generate passworlds";
+            this.Start.Text = "Generate passwords";
             this.Start.UseVisualStyleBackColor = true;
             this.Start.Click += new System.EventHandler(this.Start_Click);
             // 
@@ -78,7 +78,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(156, 23);
             this.button1.TabIndex = 4;
-            this.button1.Text = "Remove passworlds";
+            this.button1.Text = "Remove passwords";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.RemoveClick);
             // 
