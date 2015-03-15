@@ -502,17 +502,15 @@ namespace CombolistGenerator
 
         public void GenerateCombos(string name)
         {
-            SaveCombo(name + ":" + name + "\n");
-            if (Char.IsLower(name.ToCharArray()[0]))
-            {
-                SaveCombo(name + ":" + UppercaseFirst(name) + "1" + "\n");
-                SaveCombo(name + ":" + UppercaseFirst(name) + "\n");
-            }
-            SaveCombo(name + ":" + name + "0" + "\n");
-            SaveCombo(name + ":" + name + "01" + "\n");
-            SaveCombo(name + ":" + name + "1" + "\n");
-            SaveCombo(name + ":" + name + "12" + "\n");
-            SaveCombo(name + ":" + name + "123" + "\n");
+            var pw = name.ToLower();
+            SaveCombo(name + ":" + pw + "\n");
+            SaveCombo(name + ":" + UppercaseFirst(pw) + "1" + "\n");
+            SaveCombo(name + ":" + UppercaseFirst(pw) + "\n");
+            SaveCombo(name + ":" + pw + "0" + "\n");
+            SaveCombo(name + ":" + pw + "01" + "\n");
+            SaveCombo(name + ":" + pw + "1" + "\n");
+            SaveCombo(name + ":" + pw + "12" + "\n");
+            SaveCombo(name + ":" + pw + "123" + "\n");
         }
 
         public void GenerateUserList(string name)
