@@ -601,7 +601,7 @@ namespace CombolistGenerator
         private void PwPref_MouseHover(object sender, EventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            Help.Show("Prefixes separated with pipe \"|\" \nIf you start with \"*\" the first letter will be Uppercase \nWith + you declare a new password", textBox, 155, 0, 10000);
+            Help.Show("Prefixes separated with pipe \"|\" \nIf you start with \"*\" the first letter will be Uppercase \nWith \"+\" you declare a new password", textBox, 155, 0, 10000);
         }
 
         private void PwPref_MouseLeave(object sender, EventArgs e)
