@@ -12,13 +12,17 @@ namespace CombolistGenerator
     public partial class Form1 : Form
     {
         public static string OutputFile = "";
+        public static ToolTip Help = new ToolTip();
 
         public Form1()
         {
             InitializeComponent();
+            GenPref.Text = Properties.Settings.Default.GenPref;
+            ExpPref.Text = Properties.Settings.Default.ExpPref;
         }
 
         #region Worker
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             string asd;
@@ -34,7 +38,7 @@ namespace CombolistGenerator
             {
                 button6.Enabled = true;
             }
-            
+
             switch ((int) e.Argument)
             {
                 case 1:
@@ -78,6 +82,7 @@ namespace CombolistGenerator
                     lineReader = new LineReader(() => new StringReader(tmpstring));
                     max = lineReader.Count();
                     idx = 0;
+                    var prefixes = GenPref.Text.Split("|".ToCharArray());
                     foreach (var line in lineReader)
                     {
                         if (backgroundWorker1.CancellationPending)
@@ -86,10 +91,7 @@ namespace CombolistGenerator
                             SetText();
                             return;
                         }
-                        if (line.Length > 5)
-                        {
-                            GenerateCombos(line);
-                        }
+                        GenerateCombos(line,prefixes);
                         idx++;
                         var percent = idx / max * 100;
                         (sender as BackgroundWorker).ReportProgress((int) percent);
@@ -319,6 +321,7 @@ namespace CombolistGenerator
                     lineReader = new LineReader(() => new StringReader(tmpstring));
                     max = lineReader.Count();
                     idx = 0;
+                    var prefixesExp = ExpPref.Text.Split("|".ToCharArray());
                     foreach (var line in lineReader)
                     {
                         if (backgroundWorker1.CancellationPending)
@@ -329,11 +332,11 @@ namespace CombolistGenerator
                         }
                         if (line.Contains(":"))
                         {
-                            GenerateUserList(line.Split(":".ToCharArray())[0]);
+                            GenerateUserList(line.Split(":".ToCharArray())[0], prefixesExp);
                         }
                         else
                         {
-                            GenerateUserList(line);
+                            GenerateUserList(line, prefixesExp);
                         }
                         idx++;
                         var percent = idx / max * 100;
@@ -345,7 +348,9 @@ namespace CombolistGenerator
                     break;
 
                 case 7:
-                   #region UserNameToPw
+
+                    #region UserNameToPw
+
                     asd = "";
                     if (combos.InvokeRequired)
                     {
@@ -382,7 +387,7 @@ namespace CombolistGenerator
                             return;
                         }
 
-                         SaveSingleLine(line+":"+line);
+                        SaveSingleLine(line + ":" + line);
 
                         idx++;
                         var percent = idx / max * 100;
@@ -406,6 +411,7 @@ namespace CombolistGenerator
             SystemSounds.Beep.Play();
             button6.Enabled = false;
         }
+
         #endregion
 
         #region Buttons
@@ -473,6 +479,7 @@ namespace CombolistGenerator
                 combos.Text = OutputFile;
             }
         }
+
         private bool IsValidEmail(string email)
         {
             try
@@ -500,30 +507,54 @@ namespace CombolistGenerator
             return char.ToUpper(s[0]) + s.Substring(1);
         }
 
-        public void GenerateCombos(string name)
+        public void GenerateCombos(string name, string[] prefixes)
         {
             var pw = name.ToLower();
-            SaveCombo(name + ":" + pw + "\n");
-            SaveCombo(name + ":" + UppercaseFirst(pw) + "1" + "\n");
-            SaveCombo(name + ":" + UppercaseFirst(pw) + "\n");
-            SaveCombo(name + ":" + pw + "0" + "\n");
-            SaveCombo(name + ":" + pw + "01" + "\n");
-            SaveCombo(name + ":" + pw + "1" + "\n");
-            SaveCombo(name + ":" + pw + "12" + "\n");
-            SaveCombo(name + ":" + pw + "123" + "\n");
+            try
+            {
+                foreach (var pref in prefixes)
+                {
+                    if (pref.Contains("*"))
+                    {
+                        SaveCombo(name + ":" + UppercaseFirst(pw) + pref.Replace("*", "") + "\n");
+                    }
+                    else if (pref.Contains("+"))
+                    {
+                        SaveCombo(name + ":" + pref.Replace("+", "") + "\n");
+                    }
+                    else
+                    {
+                        SaveCombo(name + ":" + pw + pref + "\n");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+
         }
 
-        public void GenerateUserList(string name)
+        public void GenerateUserList(string name, string[] prefixes)
         {
-            SaveCombo(name+ "\n");
-            if (Char.IsLower(name.ToCharArray()[0]))
+            try
             {
-                SaveCombo(UppercaseFirst(name) + "\n");
+                foreach (var pref in prefixes)
+                {
+                    if (pref.Contains("*"))
+                    {
+                        SaveCombo( UppercaseFirst(name) + pref.Replace("*", "") + "\n");
+                    }else
+                    {
+                        SaveCombo(name + pref + "\n");
+                    }
+                }
             }
-            SaveCombo(name + "0" + "\n");
-            SaveCombo(name + "01" + "\n");
-            SaveCombo(name + "1" + "\n");
-            SaveCombo(name + "12" + "\n");
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         public void SaveSingleLine(string name)
@@ -531,7 +562,7 @@ namespace CombolistGenerator
             SaveCombo(name + "\n");
         }
 
-        #endregion
+    #endregion
 
         private void button6_Click(object sender, EventArgs e)
         {
@@ -548,8 +579,7 @@ namespace CombolistGenerator
                 try
                 {
                     using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
-                        sw.WriteLine(combos.Text);
-                    MessageBox.Show("File saved");
+                    sw.WriteLine(combos.Text);
                 }
                 catch (IOException)
                 {
@@ -566,6 +596,37 @@ namespace CombolistGenerator
         private void button9_Click(object sender, EventArgs e)
         {
             combos.Text = "";
+        }
+
+        private void PwPref_MouseHover(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            Help.Show("Prefixes separated with pipe \"|\" \nIf you start with \"*\" the first letter will be Uppercase \nWith + you declare a new password", textBox, 155, 0, 10000);
+        }
+
+        private void PwPref_MouseLeave(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            Help.Hide(textBox);
+        }
+
+        private void UserPref_MouseHover(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            Help.Show("Prefixes separated with pipe \"|\" \nIf you start with \"*\" the first letter will be Uppercase", textBox, 155, 0, 10000);
+        }
+
+        private void UserPref_MouseLeave(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            Help.Hide(textBox);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.ExpPref = ExpPref.Text;
+            Properties.Settings.Default.GenPref = GenPref.Text;
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -45,6 +45,8 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
+            this.GenPref = new System.Windows.Forms.TextBox();
+            this.ExpPref = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -74,7 +76,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(233, 69);
+            this.button1.Location = new System.Drawing.Point(233, 95);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(156, 23);
             this.button1.TabIndex = 4;
@@ -84,7 +86,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(233, 98);
+            this.button2.Location = new System.Drawing.Point(233, 124);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(156, 23);
             this.button2.TabIndex = 5;
@@ -94,7 +96,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(77, 333);
+            this.button3.Location = new System.Drawing.Point(77, 343);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 1;
@@ -104,7 +106,7 @@
             // 
             // ShiffleClick
             // 
-            this.ShiffleClick.Location = new System.Drawing.Point(233, 128);
+            this.ShiffleClick.Location = new System.Drawing.Point(233, 154);
             this.ShiffleClick.Name = "ShiffleClick";
             this.ShiffleClick.Size = new System.Drawing.Size(156, 23);
             this.ShiffleClick.TabIndex = 6;
@@ -122,7 +124,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(233, 158);
+            this.button4.Location = new System.Drawing.Point(233, 184);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(156, 23);
             this.button4.TabIndex = 7;
@@ -132,7 +134,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(233, 188);
+            this.button5.Location = new System.Drawing.Point(233, 214);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(156, 23);
             this.button5.TabIndex = 8;
@@ -153,7 +155,7 @@
             // button6
             // 
             this.button6.Enabled = false;
-            this.button6.Location = new System.Drawing.Point(269, 323);
+            this.button6.Location = new System.Drawing.Point(269, 330);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(93, 43);
             this.button6.TabIndex = 10;
@@ -168,7 +170,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(269, 294);
+            this.button7.Location = new System.Drawing.Point(269, 301);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(93, 23);
             this.button7.TabIndex = 9;
@@ -178,7 +180,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(233, 39);
+            this.button8.Location = new System.Drawing.Point(233, 65);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(156, 23);
             this.button8.TabIndex = 3;
@@ -188,7 +190,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(233, 218);
+            this.button9.Location = new System.Drawing.Point(233, 269);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(156, 23);
             this.button9.TabIndex = 11;
@@ -196,11 +198,35 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
+            // GenPref
+            // 
+            this.GenPref.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GenPref.Location = new System.Drawing.Point(233, 39);
+            this.GenPref.Name = "GenPref";
+            this.GenPref.Size = new System.Drawing.Size(156, 21);
+            this.GenPref.TabIndex = 12;
+            this.GenPref.Text = "|*|0|01|1|12|123|*0|*1|*01|+password";
+            this.GenPref.MouseLeave += new System.EventHandler(this.PwPref_MouseLeave);
+            this.GenPref.MouseHover += new System.EventHandler(this.PwPref_MouseHover);
+            // 
+            // ExpPref
+            // 
+            this.ExpPref.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ExpPref.Location = new System.Drawing.Point(233, 243);
+            this.ExpPref.Name = "ExpPref";
+            this.ExpPref.Size = new System.Drawing.Size(156, 21);
+            this.ExpPref.TabIndex = 15;
+            this.ExpPref.Text = "|*|0|01|1|12";
+            this.ExpPref.MouseLeave += new System.EventHandler(this.UserPref_MouseLeave);
+            this.ExpPref.MouseHover += new System.EventHandler(this.UserPref_MouseHover);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(398, 389);
+            this.ClientSize = new System.Drawing.Size(399, 389);
+            this.Controls.Add(this.ExpPref);
+            this.Controls.Add(this.GenPref);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
@@ -218,7 +244,9 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Combolist Generator by Soresu";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -240,6 +268,8 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.TextBox GenPref;
+        private System.Windows.Forms.TextBox ExpPref;
     }
 }
 

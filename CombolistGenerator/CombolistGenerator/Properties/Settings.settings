@@ -1,7 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CombolistGenerator.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="GenPref" Type="System.String" Scope="User">
+      <Value Profile="(Default)">|*|0|01|1|12|123|*0|*1|*01|+password</Value>
+    </Setting>
+    <Setting Name="ExpPref" Type="System.String" Scope="User">
+      <Value Profile="(Default)">|*|0|01|1|12</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
