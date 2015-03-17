@@ -463,13 +463,14 @@ namespace CombolistGenerator
                                 if (CheckPassword(combo[1]))
                                 {
                                     SaveSingleLine(line);
-                                } 
-                            }
-                            if (CheckPassword(line))
-                            {
-                                SaveSingleLine(line);
-                            }
+                                }
+                            }else{
+                                if (CheckPassword(line))
+                                {
+                                    SaveSingleLine(line);
+                                }
                         }
+                    }
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
