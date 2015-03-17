@@ -47,6 +47,9 @@
             this.button9 = new System.Windows.Forms.Button();
             this.GenPref = new System.Windows.Forms.TextBox();
             this.ExpPref = new System.Windows.Forms.TextBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.status = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -66,6 +69,7 @@
             // 
             // Start
             // 
+            this.Start.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.Start.Location = new System.Drawing.Point(233, 10);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(156, 23);
@@ -76,6 +80,7 @@
             // 
             // button1
             // 
+            this.button1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button1.Location = new System.Drawing.Point(233, 95);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(156, 23);
@@ -86,6 +91,7 @@
             // 
             // button2
             // 
+            this.button2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button2.Location = new System.Drawing.Point(233, 124);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(156, 23);
@@ -96,7 +102,8 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(77, 343);
+            this.button3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button3.Location = new System.Drawing.Point(39, 359);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 1;
@@ -106,6 +113,7 @@
             // 
             // ShiffleClick
             // 
+            this.ShiffleClick.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ShiffleClick.Location = new System.Drawing.Point(233, 154);
             this.ShiffleClick.Name = "ShiffleClick";
             this.ShiffleClick.Size = new System.Drawing.Size(156, 23);
@@ -124,6 +132,7 @@
             // 
             // button4
             // 
+            this.button4.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button4.Location = new System.Drawing.Point(233, 184);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(156, 23);
@@ -134,6 +143,7 @@
             // 
             // button5
             // 
+            this.button5.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button5.Location = new System.Drawing.Point(233, 214);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(156, 23);
@@ -145,9 +155,9 @@
             // progressBar1
             // 
             this.progressBar1.BackColor = System.Drawing.SystemColors.Control;
-            this.progressBar1.Location = new System.Drawing.Point(0, 379);
+            this.progressBar1.Location = new System.Drawing.Point(0, 415);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(399, 10);
+            this.progressBar1.Size = new System.Drawing.Size(400, 10);
             this.progressBar1.Step = 1;
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 9;
@@ -155,11 +165,12 @@
             // button6
             // 
             this.button6.Enabled = false;
-            this.button6.Location = new System.Drawing.Point(269, 330);
+            this.button6.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button6.Location = new System.Drawing.Point(269, 363);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(93, 43);
             this.button6.TabIndex = 10;
-            this.button6.Text = "Cancel";
+            this.button6.Text = "Stop";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -170,7 +181,8 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(269, 301);
+            this.button7.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button7.Location = new System.Drawing.Point(269, 334);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(93, 23);
             this.button7.TabIndex = 9;
@@ -180,6 +192,7 @@
             // 
             // button8
             // 
+            this.button8.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button8.Location = new System.Drawing.Point(233, 65);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(156, 23);
@@ -190,7 +203,8 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(233, 269);
+            this.button9.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button9.Location = new System.Drawing.Point(233, 299);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(156, 23);
             this.button9.TabIndex = 11;
@@ -220,11 +234,46 @@
             this.ExpPref.MouseLeave += new System.EventHandler(this.UserPref_MouseLeave);
             this.ExpPref.MouseHover += new System.EventHandler(this.UserPref_MouseHover);
             // 
+            // button10
+            // 
+            this.button10.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button10.Location = new System.Drawing.Point(120, 359);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.TabIndex = 16;
+            this.button10.Text = "Reset";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button11
+            // 
+            this.button11.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button11.Location = new System.Drawing.Point(233, 270);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(156, 23);
+            this.button11.TabIndex = 17;
+            this.button11.Text = "Check pw requirements";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.button11.MouseLeave += new System.EventHandler(this.button11_MouseLeave);
+            this.button11.MouseHover += new System.EventHandler(this.button11_MouseHover);
+            // 
+            // status
+            // 
+            this.status.AutoSize = true;
+            this.status.Location = new System.Drawing.Point(13, 333);
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(0, 13);
+            this.status.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(399, 389);
+            this.ClientSize = new System.Drawing.Size(399, 425);
+            this.Controls.Add(this.status);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button10);
             this.Controls.Add(this.ExpPref);
             this.Controls.Add(this.GenPref);
             this.Controls.Add(this.button9);
@@ -270,6 +319,9 @@
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.TextBox GenPref;
         private System.Windows.Forms.TextBox ExpPref;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Label status;
     }
 }
 
