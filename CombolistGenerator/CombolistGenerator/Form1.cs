@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MiscUtil.IO;
+using System.Text;
 
 namespace CombolistGenerator
 {
@@ -16,7 +17,6 @@ namespace CombolistGenerator
         public static ToolTip Help = new ToolTip();
         private static bool[] _lookup;
         private const string MatchPattern = @"^(?=.*[^a-zA-Z])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\S{8,}$";
-
         public Form1()
         {
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace CombolistGenerator
             string asd;
             string tmpstring;
             LineReader lineReader;
-            double idx;
+            int idx;
             double max;
             if (button6.InvokeRequired)
             {
@@ -53,7 +53,7 @@ namespace CombolistGenerator
                 button6.Enabled = true;
             }
 
-            switch ((int) e.Argument)
+            switch ((int)e.Argument)
             {
                 case 1:
 
@@ -94,7 +94,8 @@ namespace CombolistGenerator
                         combos.Text = "";
                     }
                     lineReader = new LineReader(() => new StringReader(tmpstring));
-                    max = lineReader.Count();
+                    var lineReaderArray = lineReader.ToArray();
+                    max = lineReaderArray.Count();
                     idx = 0;
                     var prefixes = GenPref.Text.Split("|".ToCharArray());
                     foreach (var line in lineReader)
@@ -105,15 +106,14 @@ namespace CombolistGenerator
                             SetText();
                             return;
                         }
-                        GenerateCombos(line,prefixes);
+                        GenerateCombos(line, prefixes);
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
-                        (sender as BackgroundWorker).ReportProgress((int) percent);
+                        (sender as BackgroundWorker).ReportProgress((int)percent);
+                        //SetText();
                     }
-
                     #endregion
-
                     break;
                 case 2:
 
@@ -161,7 +161,7 @@ namespace CombolistGenerator
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
-                        (sender as BackgroundWorker).ReportProgress((int) percent);
+                        (sender as BackgroundWorker).ReportProgress((int)percent);
                     }
 
                     #endregion
@@ -225,7 +225,7 @@ namespace CombolistGenerator
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
-                        (sender as BackgroundWorker).ReportProgress((int) percent);
+                        (sender as BackgroundWorker).ReportProgress((int)percent);
                     }
 
                     #endregion
@@ -249,11 +249,14 @@ namespace CombolistGenerator
                             SetText();
                             return;
                         }
-                        OutputFile += line + "\n";
+                        if (line.Length>0)
+                        {
+                            OutputFile += line + "\r\n";
+                        }
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
-                        (sender as BackgroundWorker).ReportProgress((int) percent);
+                        (sender as BackgroundWorker).ReportProgress((int)percent);
                     }
 
                     #endregion
@@ -303,7 +306,7 @@ namespace CombolistGenerator
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
-                        (sender as BackgroundWorker).ReportProgress((int) percent);
+                        (sender as BackgroundWorker).ReportProgress((int)percent);
                     }
 
                     #endregion
@@ -360,7 +363,7 @@ namespace CombolistGenerator
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
-                        (sender as BackgroundWorker).ReportProgress((int) percent);
+                        (sender as BackgroundWorker).ReportProgress((int)percent);
                     }
 
                     #endregion
@@ -411,7 +414,7 @@ namespace CombolistGenerator
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
-                        (sender as BackgroundWorker).ReportProgress((int) percent);
+                        (sender as BackgroundWorker).ReportProgress((int)percent);
                     }
 
                     #endregion
@@ -464,17 +467,19 @@ namespace CombolistGenerator
                                 {
                                     SaveSingleLine(line);
                                 }
-                            }else{
+                            }
+                            else
+                            {
                                 if (CheckPassword(line))
                                 {
                                     SaveSingleLine(line);
                                 }
+                            }
                         }
-                    }
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
-                        (sender as BackgroundWorker).ReportProgress((int) percent);
+                        (sender as BackgroundWorker).ReportProgress((int)percent);
                     }
 
                     #endregion
@@ -537,6 +542,7 @@ namespace CombolistGenerator
                 {
                     OutputFile = File.ReadAllText(file);
                     combos.Text = OutputFile;
+                    SetText();
                 }
                 catch (IOException)
                 {
@@ -572,11 +578,19 @@ namespace CombolistGenerator
         {
             if (combos.InvokeRequired)
             {
-                combos.Invoke(new MethodInvoker(delegate { combos.Text = OutputFile; }));
+                combos.Invoke(new MethodInvoker(
+                    delegate
+                    {
+                        combos.Text = OutputFile;
+                        combos.SelectionStart = combos.Text.Length;
+                        combos.ScrollToCaret();
+                    }));
             }
             else
             {
                 combos.Text = OutputFile;
+                combos.SelectionStart = combos.Text.Length;
+                combos.ScrollToCaret();
             }
         }
 
@@ -595,7 +609,10 @@ namespace CombolistGenerator
 
         public void SaveCombo(string combo)
         {
-            OutputFile += combo;
+            if (combo.Length>0)
+            {
+                     OutputFile += combo;
+            }
         }
 
         private static string UppercaseFirst(string s)
@@ -609,6 +626,8 @@ namespace CombolistGenerator
 
         public void GenerateCombos(string name, string[] prefixes)
         {
+
+
             var pw = name.ToLower();
             try
             {
@@ -616,23 +635,23 @@ namespace CombolistGenerator
                 {
                     if (pref.Contains("*"))
                     {
-                        SaveCombo(name + ":" + UppercaseFirst(pw) + pref.Replace("*", "") + "\n");
+                        SaveCombo(name + ":" + UppercaseFirst(pw) + pref.Replace("*", "") + Environment.NewLine);
                     }
                     else if (pref.Contains("+"))
                     {
-                        SaveCombo(name + ":" + pref.Replace("+", "") + "\n");
+                        SaveCombo(name + ":" + pref.Replace("+", "") + Environment.NewLine);
                     }
                     else
                     {
-                        SaveCombo(name + ":" + pw + pref + "\n");
+                        SaveCombo(name + ":" + pw + pref + Environment.NewLine);
                     }
                 }
             }
             catch (Exception e)
             {
+                
                 Console.WriteLine(e.ToString());
             }
-
 
         }
 
@@ -644,10 +663,11 @@ namespace CombolistGenerator
                 {
                     if (pref.Contains("*"))
                     {
-                        SaveCombo( UppercaseFirst(name) + pref.Replace("*", "") + "\n");
-                    }else
+                        SaveCombo(UppercaseFirst(name) + pref.Replace("*", "") + Environment.NewLine);
+                    }
+                    else
                     {
-                        SaveCombo(name + pref + "\n");
+                        SaveCombo(name + pref + Environment.NewLine);
                     }
                 }
             }
@@ -659,7 +679,7 @@ namespace CombolistGenerator
 
         public void SaveSingleLine(string name)
         {
-            SaveCombo(name + "\n");
+            SaveCombo(name + Environment.NewLine);
         }
 
         public static string RemoveSpecialCharacters(string str)
@@ -677,7 +697,7 @@ namespace CombolistGenerator
             return new string(buffer, 0, index);
         }
 
-    #endregion
+        #endregion
 
         private void button6_Click(object sender, EventArgs e)
         {
@@ -690,11 +710,16 @@ namespace CombolistGenerator
             var result = saveFileDialog1.ShowDialog();
             if (result == DialogResult.OK) // Test result.
             {
-                var file = openFileDialog1.FileName;
                 try
                 {
-                    using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
-                    sw.WriteLine(combos.Text);
+                    using (
+                        StreamWriter sw = new StreamWriter(
+                            File.Open(saveFileDialog1.FileName, FileMode.Create), Encoding.UTF8))
+                    {
+                        sw.NewLine = "\r\n";
+                        sw.WriteLine(combos.Text.Replace("\n", "\r\n"));
+                        sw.Close();
+                    }
                 }
                 catch (IOException)
                 {
@@ -719,7 +744,7 @@ namespace CombolistGenerator
         private void PwPref_MouseHover(object sender, EventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            Help.Show("Prefixes separated with pipe \"|\" \nIf you start with \"*\" the first letter will be Uppercase \nWith \"+\" you declare a new password", textBox, 155, 0, 10000);
+            Help.Show("Prefixes separated with pipe \"|\" \r\nIf you start with \"*\" the first letter will be Uppercase \r\nWith \"+\" you declare a new password", textBox, 155, 0, 10000);
         }
 
         private void PwPref_MouseLeave(object sender, EventArgs e)
@@ -731,7 +756,7 @@ namespace CombolistGenerator
         private void UserPref_MouseHover(object sender, EventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            Help.Show("Prefixes separated with pipe \"|\" \nIf you start with \"*\" the first letter will be Uppercase", textBox, 155, 0, 10000);
+            Help.Show("Prefixes separated with pipe \"|\" \r\nIf you start with \"*\" the first letter will be Uppercase", textBox, 155, 0, 10000);
         }
 
         private void UserPref_MouseLeave(object sender, EventArgs e)
