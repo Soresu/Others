@@ -470,28 +470,24 @@ namespace CombolistGenerator
                     break;
                 case 9:
                     #region proxy
-                    Setstatus("Request sent, downloading.");
-                    Uri uri = new Uri("http://txt.proxyspy.net/proxy.txt");
-                    var html = await DownloadStringAsync(uri);
                     Regex rgx = new Regex(@"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b:\d{2,5}", RegexOptions.IgnoreCase);
+                    
+                    Setstatus("Request sent, downloading.");
+                    Uri uri = new Uri("http://proxylists.net/http_highanon.txt");
+                    var html = await DownloadStringAsync(uri);
                     MatchCollection matches = rgx.Matches(html);
-                    idx = 0;
                     List<string> proxyList= (from object line in matches select line.ToString()).ToList();
+                    
                     Setstatus("Request sent, downloading..");
-                    uri = new Uri("http://multiproxy.org/txt_all/proxy.txt");
+                    uri = new Uri("http://web.unideb.hu/aurel192/proxylist.txt");
                     html = await DownloadStringAsync(uri);
                     matches = rgx.Matches(html);
-                    idx = 0;
                     proxyList.AddRange(from object line in matches select line.ToString());
-                    Setstatus("Request sent, downloading...");
-                    uri = new Uri("http://checkerproxy.net/all_proxy");
-                    html = "";
-                    html = await DownloadStringAsync(uri);
-                    matches = rgx.Matches(html);
+
                     idx = 0;
-                    proxyList.AddRange(from object line in matches select line.ToString());
                     max = proxyList.Count;
-                    SaveStringlist(proxyList);
+                    SaveStringlist(proxyList.Distinct().ToList());
+                    Setstatus(proxyList.Distinct().Count() + " proxy found");
                     #endregion
                     break;
                 
