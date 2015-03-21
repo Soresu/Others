@@ -50,6 +50,7 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.status = new System.Windows.Forms.Label();
+            this.button12 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -103,7 +104,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button3.Location = new System.Drawing.Point(39, 359);
+            this.button3.Location = new System.Drawing.Point(39, 352);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 1;
@@ -237,7 +238,7 @@
             // button10
             // 
             this.button10.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button10.Location = new System.Drawing.Point(120, 359);
+            this.button10.Location = new System.Drawing.Point(120, 352);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(75, 23);
             this.button10.TabIndex = 16;
@@ -266,11 +267,23 @@
             this.status.Size = new System.Drawing.Size(0, 13);
             this.status.TabIndex = 18;
             // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button12.Location = new System.Drawing.Point(39, 382);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(156, 23);
+            this.button12.TabIndex = 19;
+            this.button12.Text = "Get proxy list";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(399, 425);
+            this.Controls.Add(this.button12);
             this.Controls.Add(this.status);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
@@ -322,6 +335,7 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Label status;
+        private System.Windows.Forms.Button button12;
     }
 }
 

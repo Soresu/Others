@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Net;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MiscUtil.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CombolistGenerator
 {
@@ -37,7 +42,7 @@ namespace CombolistGenerator
 
         #region Worker
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private async void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             string asd;
             string tmpstring;
@@ -484,6 +489,35 @@ namespace CombolistGenerator
 
                     #endregion
                     break;
+                case 9:
+                    Setstatus("Request sent, downloading.");
+                    Uri uri = new Uri("http://txt.proxyspy.net/proxy.txt");
+                    var html = await DownloadStringAsync(uri);
+                    Regex rgx = new Regex(@"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b:\d{2,5}", RegexOptions.IgnoreCase);
+                    MatchCollection matches = rgx.Matches(html);
+                    idx = 0;
+                    List<string> proxyList= (from object line in matches select line.ToString()).ToList();
+                    Setstatus("Request sent, downloading..");
+                    uri = new Uri("http://multiproxy.org/txt_all/proxy.txt");
+                    html = await DownloadStringAsync(uri);
+                    matches = rgx.Matches(html);
+                    idx = 0;
+                    proxyList.AddRange(from object line in matches select line.ToString());
+                    Setstatus("Request sent, downloading...");
+                    uri = new Uri("http://checkerproxy.net/all_proxy");
+                    html = "";
+                    html = await DownloadStringAsync(uri);
+                    matches = rgx.Matches(html);
+                    idx = 0;
+                    proxyList.AddRange(from object line in matches select line.ToString());
+                    max = proxyList.Count;
+                    foreach (var line in proxyList)
+                    {
+                        Setstatus(idx, max);
+                        idx++;
+                        SaveSingleLine(line.ToString());
+                    }
+                    break;
             }
             SetText();
         }
@@ -500,7 +534,18 @@ namespace CombolistGenerator
                 status.Text = idx + "/" + max;
             }
         }
-
+        private void Setstatus(string text)
+        {
+            if (status.InvokeRequired)
+            {
+                status.Invoke(
+                    new MethodInvoker(delegate { status.Text = text; }));
+            }
+            else
+            {
+                status.Text = text;
+            }
+        }
         private void backgroundWorker1_ProgressChanged_1(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
@@ -697,6 +742,23 @@ namespace CombolistGenerator
             return new string(buffer, 0, index);
         }
 
+        public static Task<string> DownloadStringAsync(Uri url)
+        {
+            var tcs = new TaskCompletionSource<string>();
+            var wc = new WebClient();
+            wc.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0");
+            wc.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
+            wc.Encoding = Encoding.UTF8;
+            wc.DownloadStringCompleted += (s, e) =>
+            {
+                if (e.Error != null) tcs.TrySetException(e.Error);
+                else if (e.Cancelled) tcs.TrySetCanceled();
+                else tcs.TrySetResult(e.Result);
+            };
+            wc.DownloadStringAsync(url);
+            return tcs.Task;
+        }
+
         #endregion
 
         private void button6_Click(object sender, EventArgs e)
@@ -791,6 +853,12 @@ namespace CombolistGenerator
         {
             Button textBox = (Button)sender;
             Help.Hide(textBox);
+        }
+
+        private async void button12_Click(object sender, EventArgs e)
+        {
+            backgroundWorker1.RunWorkerAsync(9);
+
         }
     }
 }
