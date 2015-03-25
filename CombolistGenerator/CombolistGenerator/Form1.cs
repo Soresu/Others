@@ -111,16 +111,18 @@ namespace CombolistGenerator
                         if (backgroundWorker1.CancellationPending)
                         {
                             e.Cancel = true;
-                            SetText();
+                            SaveStringlist(temp);
                             return;
                         }
                         idx++;
                         Setstatus(idx, max);
                         var percent = idx / max * 100;
                         GenerateCombos(line, prefixes);
+                        (sender as BackgroundWorker).ReportProgress((int)percent);
                         //SetText();
                     }
                     max = temp.Count;
+                    Setstatus(temp.Count +" combo generated");
                     SaveStringlist(temp);
                     #endregion
                     break;
@@ -161,7 +163,7 @@ namespace CombolistGenerator
                         if (backgroundWorker1.CancellationPending)
                         {
                             e.Cancel = true;
-                            SetText();
+                            SaveStringlist(temp);
                             return;
                         }
                         if (line.Contains(":"))
@@ -214,7 +216,7 @@ namespace CombolistGenerator
                         if (backgroundWorker1.CancellationPending)
                         {
                             e.Cancel = true;
-                            SetText();
+                            SaveStringlist(temp);
                             return;
                         }
                         if (line.Contains(":"))
@@ -335,7 +337,7 @@ namespace CombolistGenerator
                         if (backgroundWorker1.CancellationPending)
                         {
                             e.Cancel = true;
-                            SetText();
+                            SaveStringlist(temp);
                             return;
                         }
                         if (line.Contains(":"))
@@ -390,7 +392,7 @@ namespace CombolistGenerator
                         if (backgroundWorker1.CancellationPending)
                         {
                             e.Cancel = true;
-                            SetText();
+                            SaveStringlist(temp);
                             return;
                         }
                         temp.Add(line + ":" + line);
@@ -438,7 +440,7 @@ namespace CombolistGenerator
                         if (backgroundWorker1.CancellationPending)
                         {
                             e.Cancel = true;
-                            SetText();
+                            SaveStringlist(temp);
                             return;
                         }
                         if (!(line.Split(':').Length - 1 > 1))
@@ -574,6 +576,8 @@ namespace CombolistGenerator
                     OutputFile = File.ReadAllText(file);
                     combos.Text = OutputFile;
                     SetText();
+                    var lineReader = new LineReader(() => new StringReader(OutputFile));
+                    Setstatus(lineReader.Count() +" line added");
                 }
                 catch (IOException)
                 {
@@ -595,6 +599,106 @@ namespace CombolistGenerator
         private void ExpandClick(object sender, EventArgs e)
         {
             backgroundWorker1.RunWorkerAsync(6);
+        }
+        private void StopClick(object sender, EventArgs e)
+        {
+            backgroundWorker1.CancelAsync();
+            button6.Enabled = false;
+        }
+
+        private void SaveClick(object sender, EventArgs e)
+        {
+            var result = saveFileDialog1.ShowDialog();
+            if (result == DialogResult.OK) // Test result.
+            {
+                try
+                {
+                    var utf8WithoutBom = new System.Text.UTF8Encoding(false);
+                    //^^^^^
+                    using (var sw = new StreamWriter(saveFileDialog1.FileName, false, utf8WithoutBom))
+                    {
+                        sw.NewLine = "\r\n";
+                        sw.WriteLine(combos.Text.Replace("\n", "\r\n"));
+                        sw.Close();
+                        Setstatus("File saved!");
+                    }
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("Unable to save the file");
+                }
+            }
+        }
+
+        private void UserToPwClick(object sender, EventArgs e)
+        {
+            backgroundWorker1.RunWorkerAsync(7);
+        }
+
+        private void ClearClick(object sender, EventArgs e)
+        {
+            combos.Text = "";
+        }
+        private void ValidateClick(object sender, EventArgs e)
+        {
+            backgroundWorker1.RunWorkerAsync(8);
+        }
+        private void PwPref_MouseHover(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            Help.Show("Prefixes separated with pipe \"|\" \r\nIf you start with \"*\" the first letter will be Uppercase \r\nWith \"+\" you declare a new password", textBox, 155, 0, 10000);
+        }
+
+        private void PwPref_MouseLeave(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            Help.Hide(textBox);
+        }
+
+        private void UserPref_MouseHover(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            Help.Show("Prefixes separated with pipe \"|\" \r\nIf you start with \"*\" the first letter will be Uppercase", textBox, 155, 0, 10000);
+        }
+
+        private void UserPref_MouseLeave(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            Help.Hide(textBox);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.ExpPref = ExpPref.Text;
+            Properties.Settings.Default.GenPref = GenPref.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void ResetClick(object sender, EventArgs e)
+        {
+            backgroundWorker1.CancelAsync();
+            button6.Enabled = false;
+            GenPref.Text = "|*|0|01|1|12|123|*0|*1|*01|+password";
+            ExpPref.Text = "|*|0|01|1|12";
+            combos.Text = "";
+        }
+
+        private void button11_MouseHover(object sender, EventArgs e)
+        {
+            Button textBox = (Button)sender;
+            Help.Show("Password include lowercase and uppercase alphabetic characters, numbers", textBox, 155, 1, 10000);
+        }
+
+        private void button11_MouseLeave(object sender, EventArgs e)
+        {
+            Button textBox = (Button)sender;
+            Help.Hide(textBox);
+        }
+
+        private async void ProxyClick(object sender, EventArgs e)
+        {
+            backgroundWorker1.RunWorkerAsync(9);
+
         }
 
         #endregion
@@ -647,22 +751,25 @@ namespace CombolistGenerator
         }
         public void SaveStringlist(List<string> list)
         {
-            if (combos.InvokeRequired)
-            {
-                combos.Invoke(
-                    new MethodInvoker(delegate
+
+                if (combos.InvokeRequired)
+                {
+                    combos.Invoke(
+                        new MethodInvoker(delegate
+                        {
+                            combos.Text = String.Join(Environment.NewLine, list);
+                            combos.SelectionStart = combos.Text.Length;
+                            combos.ScrollToCaret();
+                        }));
+                }
+                else
                 {
                     combos.Text = String.Join(Environment.NewLine, list);
                     combos.SelectionStart = combos.Text.Length;
                     combos.ScrollToCaret();
-                }));
-            }
-            else
-            {
-                combos.Text = String.Join(Environment.NewLine, list);
-                combos.SelectionStart = combos.Text.Length;
-                combos.ScrollToCaret();
-            } 
+                }  
+
+
         }
         private static string UppercaseFirst(string s)
         {
@@ -676,10 +783,9 @@ namespace CombolistGenerator
         public void GenerateCombos(string name, string[] prefixes)
         {
 
-
-            var pw = name.Replace(" ","").ToLower();
             try
             {
+                var pw = name.Replace(" ", "").ToLower();
                 foreach (var pref in prefixes)
                 {
                     if (pref.Contains("*"))
@@ -765,104 +871,6 @@ namespace CombolistGenerator
 
         #endregion
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-            backgroundWorker1.CancelAsync();
-            button6.Enabled = false;
-        }
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            var result = saveFileDialog1.ShowDialog();
-            if (result == DialogResult.OK) // Test result.
-            {
-                try
-                {
-                    using (
-                        StreamWriter sw = new StreamWriter(
-                            File.Open(saveFileDialog1.FileName, FileMode.Create), Encoding.UTF8))
-                    {
-                        sw.NewLine = "\r\n";
-                        sw.WriteLine(combos.Text.Replace("\n", "\r\n"));
-                        sw.Close();
-                    }
-                }
-                catch (IOException)
-                {
-                    MessageBox.Show("Unable to save the file");
-                }
-            }
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            backgroundWorker1.RunWorkerAsync(7);
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            combos.Text = "";
-        }
-        private void button11_Click(object sender, EventArgs e)
-        {
-            backgroundWorker1.RunWorkerAsync(8);
-        }
-        private void PwPref_MouseHover(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            Help.Show("Prefixes separated with pipe \"|\" \r\nIf you start with \"*\" the first letter will be Uppercase \r\nWith \"+\" you declare a new password", textBox, 155, 0, 10000);
-        }
-
-        private void PwPref_MouseLeave(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            Help.Hide(textBox);
-        }
-
-        private void UserPref_MouseHover(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            Help.Show("Prefixes separated with pipe \"|\" \r\nIf you start with \"*\" the first letter will be Uppercase", textBox, 155, 0, 10000);
-        }
-
-        private void UserPref_MouseLeave(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            Help.Hide(textBox);
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Properties.Settings.Default.ExpPref = ExpPref.Text;
-            Properties.Settings.Default.GenPref = GenPref.Text;
-            Properties.Settings.Default.Save();
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            backgroundWorker1.CancelAsync();
-            button6.Enabled = false;
-            GenPref.Text = "|*|0|01|1|12|123|*0|*1|*01|+password";
-            ExpPref.Text = "|*|0|01|1|12";
-            combos.Text = "";
-        }
-
-        private void button11_MouseHover(object sender, EventArgs e)
-        {
-            Button textBox = (Button)sender;
-            Help.Show("Password include lowercase and uppercase alphabetic characters, numbers", textBox, 155, 1, 10000);
-        }
-
-        private void button11_MouseLeave(object sender, EventArgs e)
-        {
-            Button textBox = (Button)sender;
-            Help.Hide(textBox);
-        }
-
-        private async void button12_Click(object sender, EventArgs e)
-        {
-            backgroundWorker1.RunWorkerAsync(9);
-
-        }
     }
 }

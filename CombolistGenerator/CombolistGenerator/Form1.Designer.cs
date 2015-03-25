@@ -173,7 +173,7 @@
             this.button6.TabIndex = 10;
             this.button6.Text = "Stop";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.button6.Click += new System.EventHandler(this.StopClick);
             // 
             // saveFileDialog1
             // 
@@ -189,7 +189,7 @@
             this.button7.TabIndex = 9;
             this.button7.Text = "Save to file";
             this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.button7.Click += new System.EventHandler(this.SaveClick);
             // 
             // button8
             // 
@@ -200,7 +200,7 @@
             this.button8.TabIndex = 3;
             this.button8.Text = "Add the username to pw";
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.button8.Click += new System.EventHandler(this.UserToPwClick);
             // 
             // button9
             // 
@@ -211,7 +211,7 @@
             this.button9.TabIndex = 11;
             this.button9.Text = "Clear list";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.button9.Click += new System.EventHandler(this.ClearClick);
             // 
             // GenPref
             // 
@@ -244,7 +244,7 @@
             this.button10.TabIndex = 16;
             this.button10.Text = "Reset";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.button10.Click += new System.EventHandler(this.ResetClick);
             // 
             // button11
             // 
@@ -255,7 +255,7 @@
             this.button11.TabIndex = 17;
             this.button11.Text = "Check pw requirements";
             this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.button11.Click += new System.EventHandler(this.ValidateClick);
             this.button11.MouseLeave += new System.EventHandler(this.button11_MouseLeave);
             this.button11.MouseHover += new System.EventHandler(this.button11_MouseHover);
             // 
@@ -269,6 +269,7 @@
             // 
             // button12
             // 
+            this.button12.Enabled = false;
             this.button12.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button12.Location = new System.Drawing.Point(39, 382);
             this.button12.Name = "button12";
@@ -276,7 +277,8 @@
             this.button12.TabIndex = 19;
             this.button12.Text = "Get proxy list";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.button12.Visible = false;
+            this.button12.Click += new System.EventHandler(this.ProxyClick);
             // 
             // Form1
             // 
