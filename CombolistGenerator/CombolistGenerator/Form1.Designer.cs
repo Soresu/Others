@@ -269,7 +269,6 @@
             // 
             // button12
             // 
-            this.button12.Enabled = false;
             this.button12.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button12.Location = new System.Drawing.Point(39, 382);
             this.button12.Name = "button12";
@@ -277,7 +276,6 @@
             this.button12.TabIndex = 19;
             this.button12.Text = "Get proxy list";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Visible = false;
             this.button12.Click += new System.EventHandler(this.ProxyClick);
             // 
             // Form1

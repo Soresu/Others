@@ -260,6 +260,8 @@ namespace CombolistGenerator
                     var rnd = new Random();
                     var liness = lines.OrderBy(line => rnd.Next()).ToArray();
                     OutputFile = "";
+                    temp.Clear();
+                    temp = liness.ToList();
                     SaveStringlist(liness.ToList());
                     Setstatus(liness.Count() + " line shuffled");
 
@@ -293,8 +295,10 @@ namespace CombolistGenerator
                     }
                     OutputFile = "";
                     tmpstring = asd;
+                    temp.Clear();
                     lineReader = new LineReader(() => new StringReader(tmpstring));
                     var lineReaderDistincted = lineReader.Distinct();
+                    temp = lineReaderDistincted.ToList();
                     SaveStringlist(lineReaderDistincted.ToList());
                     var removed = lineReader.Count() - lineReaderDistincted.Count();
                     Setstatus(removed + " removed");
@@ -473,18 +477,31 @@ namespace CombolistGenerator
                 case 9:
                     #region proxy
                     Regex rgx = new Regex(@"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b:\d{2,5}", RegexOptions.IgnoreCase);
-                    
+                    Regex rgxip = new Regex(@"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b", RegexOptions.IgnoreCase);
                     Setstatus("Request sent, downloading.");
                     Uri uri = new Uri("http://proxylists.net/http_highanon.txt");
                     var html = await DownloadStringAsync(uri);
                     MatchCollection matches = rgx.Matches(html);
                     List<string> proxyList= (from object line in matches select line.ToString()).ToList();
-                    
+
                     Setstatus("Request sent, downloading..");
                     uri = new Uri("http://web.unideb.hu/aurel192/proxylist.txt");
                     html = await DownloadStringAsync(uri);
                     matches = rgx.Matches(html);
                     proxyList.AddRange(from object line in matches select line.ToString());
+
+                    Setstatus("Request sent, downloading...");
+                    using (WebClient client = new WebClient())
+                    {
+                        client.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0");
+                        client.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
+                        client.Encoding = Encoding.UTF8;
+                        html = client.DownloadString("http://incloak.com/proxy-list/?maxtime=1000&ports=80&anon=34");
+                        matches = rgxip.Matches(html);
+                        proxyList.AddRange(from object line in matches select line.ToString());
+                    }
+
+
 
                     idx = 0;
                     max = proxyList.Count;
@@ -618,7 +635,7 @@ namespace CombolistGenerator
                     using (var sw = new StreamWriter(saveFileDialog1.FileName, false, utf8WithoutBom))
                     {
                         sw.NewLine = "\r\n";
-                        sw.WriteLine(combos.Text.Replace("\n", "\r\n"));
+                        sw.WriteLine(String.Join(Environment.NewLine, temp));
                         sw.Close();
                         Setstatus("File saved!");
                     }
@@ -751,7 +768,27 @@ namespace CombolistGenerator
         }
         public void SaveStringlist(List<string> list)
         {
-
+            if (list.Count>500000)
+            {
+                if (combos.InvokeRequired)
+                {
+                    combos.Invoke(
+                        new MethodInvoker(delegate
+                        {
+                            combos.Text = "Too much data to show here, save it to txt";
+                            combos.SelectionStart = combos.Text.Length;
+                            combos.ScrollToCaret();
+                        }));
+                }
+                else
+                {
+                    combos.Text = "Too much data to show here, save it to txt";
+                    combos.SelectionStart = combos.Text.Length;
+                    combos.ScrollToCaret();
+                }
+                return;
+            }
+            
                 if (combos.InvokeRequired)
                 {
                     combos.Invoke(
@@ -767,9 +804,9 @@ namespace CombolistGenerator
                     combos.Text = String.Join(Environment.NewLine, list);
                     combos.SelectionStart = combos.Text.Length;
                     combos.ScrollToCaret();
-                }  
+                }
 
-
+            
         }
         private static string UppercaseFirst(string s)
         {
