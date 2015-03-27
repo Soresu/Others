@@ -49,6 +49,7 @@ namespace CombolistGenerator
             string asd;
             string tmpstring;
             LineReader lineReader;
+            List<string> tempTemp = new List<string>(); 
             int idx;
             double max;
             if (button6.InvokeRequired)
@@ -67,18 +68,8 @@ namespace CombolistGenerator
                     #region Generatepw
 
                     OutputFile = "";
-                    asd = "";
-                    if (combos.InvokeRequired)
+                    if (temp.Count<2)
                     {
-                        combos.Invoke(new MethodInvoker(delegate { asd = combos.Text; }));
-                    }
-                    else
-                    {
-                        asd = combos.Text;
-                    }
-                    if (asd == "")
-                    {
-
                         if (combos.InvokeRequired)
                         {
                             combos.Invoke(
@@ -91,22 +82,12 @@ namespace CombolistGenerator
 
                         return;
                     }
-                    tmpstring = asd;
-                    if (combos.InvokeRequired)
-                    {
-                        combos.Invoke(new MethodInvoker(delegate { combos.Text = ""; }));
-                    }
-                    else
-                    {
-                        combos.Text = "";
-                    }
-                    lineReader = new LineReader(() => new StringReader(tmpstring));
-                    var lineReaderArray = lineReader.ToArray();
                     idx = 0;
-                    temp.Clear();
                     var prefixes = GenPref.Text.Split("|".ToCharArray());
-                    max = lineReader.Count();
-                    foreach (var line in lineReader)
+                    tempTemp.AddRange(temp);
+                    temp.Clear();
+                    max = tempTemp.Count();
+                    foreach (var line in tempTemp)
                     {
                         if (backgroundWorker1.CancellationPending)
                         {
@@ -130,16 +111,7 @@ namespace CombolistGenerator
 
                     #region RemovePasswords
 
-                    asd = "";
-                    if (combos.InvokeRequired)
-                    {
-                        combos.Invoke(new MethodInvoker(delegate { asd = combos.Text; }));
-                    }
-                    else
-                    {
-                        asd = combos.Text;
-                    }
-                    if (asd == "" || !asd.Contains(":"))
+                   if (temp.Count<2)
                     {
                         if (combos.InvokeRequired)
                         {
@@ -153,12 +125,11 @@ namespace CombolistGenerator
                         return;
                     }
                     OutputFile = "";
-                    tmpstring = asd;
-                    lineReader = new LineReader(() => new StringReader(tmpstring));
-                    max = lineReader.Count();
+                    tempTemp.AddRange(temp);
+                    max = tempTemp.Count();
                     idx = 0;
                     temp.Clear();
-                    foreach (var line in lineReader)
+                    foreach (var line in tempTemp)
                     {
                         if (backgroundWorker1.CancellationPending)
                         {
@@ -183,16 +154,7 @@ namespace CombolistGenerator
 
                     #region EmailToUser
 
-                    asd = "";
-                    if (combos.InvokeRequired)
-                    {
-                        combos.Invoke(new MethodInvoker(delegate { asd = combos.Text; }));
-                    }
-                    else
-                    {
-                        asd = combos.Text;
-                    }
-                    if (asd == "" || !asd.Contains("@"))
+                    if (temp.Count<2)
                     {
                         if (combos.InvokeRequired)
                         {
@@ -206,12 +168,12 @@ namespace CombolistGenerator
                         return;
                     }
                     OutputFile = "";
-                    tmpstring = asd;
-                    lineReader = new LineReader(() => new StringReader(tmpstring));
-                    max = lineReader.Count();
+                    tempTemp.AddRange(temp);
+                    temp.Clear();
+                    max = tempTemp.Count();
                     idx = 0;
                     temp.Clear();
-                    foreach (var line in lineReader)
+                    foreach (var line in tempTemp)
                     {
                         if (backgroundWorker1.CancellationPending)
                         {
@@ -247,20 +209,9 @@ namespace CombolistGenerator
                 case 4:
 
                     #region Shuffle
-                    asd = "";
-                    if (combos.InvokeRequired)
-                    {
-                        combos.Invoke(new MethodInvoker(delegate { asd = combos.Text; }));
-                    }
-                    else
-                    {
-                        asd = combos.Text;
-                    }
-                    var lines = new LineReader(() => new StringReader(asd));
                     var rnd = new Random();
-                    var liness = lines.OrderBy(line => rnd.Next()).ToArray();
+                    var liness = temp.OrderBy(line => rnd.Next()).ToArray();
                     OutputFile = "";
-                    temp.Clear();
                     temp = liness.ToList();
                     SaveStringlist(liness.ToList());
                     Setstatus(liness.Count() + " line shuffled");
@@ -270,17 +221,7 @@ namespace CombolistGenerator
                     break;
                 case 5:
                     #region Remove
-
-                    asd = "";
-                    if (combos.InvokeRequired)
-                    {
-                        combos.Invoke(new MethodInvoker(delegate { asd = combos.Text; }));
-                    }
-                    else
-                    {
-                        asd = combos.Text;
-                    }
-                    if (asd == "")
+                    if (temp.Count<2)
                     {
                         if (combos.InvokeRequired)
                         {
@@ -294,29 +235,18 @@ namespace CombolistGenerator
                         return;
                     }
                     OutputFile = "";
-                    tmpstring = asd;
+                    tempTemp.AddRange(temp);
                     temp.Clear();
-                    lineReader = new LineReader(() => new StringReader(tmpstring));
-                    var lineReaderDistincted = lineReader.Distinct();
-                    temp = lineReaderDistincted.ToList();
-                    SaveStringlist(lineReaderDistincted.ToList());
-                    var removed = lineReader.Count() - lineReaderDistincted.Count();
+                    temp = tempTemp.Distinct().ToList();
+                    SaveStringlist(temp.ToList());
+                    var removed = tempTemp.Count() - temp.Count();
                     Setstatus(removed + " removed");
                     #endregion
                     break;
                 case 6:
                     #region Expand
 
-                    asd = "";
-                    if (combos.InvokeRequired)
-                    {
-                        combos.Invoke(new MethodInvoker(delegate { asd = combos.Text; }));
-                    }
-                    else
-                    {
-                        asd = combos.Text;
-                    }
-                    if (asd == "")
+                    if (temp.Count<2)
                     {
                         if (combos.InvokeRequired)
                         {
@@ -330,13 +260,13 @@ namespace CombolistGenerator
                         return;
                     }
                     OutputFile = "";
-                    tmpstring = asd;
-                    lineReader = new LineReader(() => new StringReader(tmpstring));
-                    max = lineReader.Count();
+                    tempTemp.AddRange(temp);
+                    temp.Clear();
+                    max = tempTemp.Count();
                     idx = 0;
                     var prefixesExp = ExpPref.Text.Split("|".ToCharArray());
                     temp.Clear();
-                    foreach (var line in lineReader)
+                    foreach (var line in tempTemp)
                     {
                         if (backgroundWorker1.CancellationPending)
                         {
@@ -363,16 +293,7 @@ namespace CombolistGenerator
                 case 7:
                     #region UserNameToPw
 
-                    asd = "";
-                    if (combos.InvokeRequired)
-                    {
-                        combos.Invoke(new MethodInvoker(delegate { asd = combos.Text; }));
-                    }
-                    else
-                    {
-                        asd = combos.Text;
-                    }
-                    if (asd == "")
+                    if (temp.Count<2)
                     {
                         if (combos.InvokeRequired)
                         {
@@ -386,12 +307,12 @@ namespace CombolistGenerator
                         return;
                     }
                     OutputFile = "";
-                    tmpstring = asd;
-                    lineReader = new LineReader(() => new StringReader(tmpstring));
-                    max = lineReader.Count();
+                    tempTemp.AddRange(temp);
+                    temp.Clear();
+                    max = tempTemp.Count();
                     idx = 0;
                     temp.Clear();
-                    foreach (var line in lineReader)
+                    foreach (var line in tempTemp)
                     {
                         if (backgroundWorker1.CancellationPending)
                         {
@@ -411,16 +332,8 @@ namespace CombolistGenerator
                 case 8:
                     #region Validate
 
-                    asd = "";
-                    if (combos.InvokeRequired)
-                    {
-                        combos.Invoke(new MethodInvoker(delegate { asd = combos.Text; }));
-                    }
-                    else
-                    {
-                        asd = combos.Text;
-                    }
-                    if (asd == "")
+
+                    if (temp.Count<2)
                     {
                         if (combos.InvokeRequired)
                         {
@@ -434,12 +347,12 @@ namespace CombolistGenerator
                         return;
                     }
                     OutputFile = "";
-                    tmpstring = asd;
-                    lineReader = new LineReader(() => new StringReader(tmpstring));
-                    max = lineReader.Count();
+                    tempTemp.AddRange(temp);
+                    temp.Clear();
+                    max = tempTemp.Count();
                     idx = 0;
                     temp.Clear();
-                    foreach (var line in lineReader)
+                    foreach (var line in tempTemp)
                     {
                         if (backgroundWorker1.CancellationPending)
                         {
@@ -471,7 +384,7 @@ namespace CombolistGenerator
                         (sender as BackgroundWorker).ReportProgress((int)percent);
                     }
                     SaveStringlist(temp);
-                    Setstatus(lineReader.Count()-temp.Count + " removed");
+                    Setstatus(tempTemp.Count() - temp.Count + " removed");
                     #endregion
                     break;
                 case 9:
@@ -591,9 +504,9 @@ namespace CombolistGenerator
                 try
                 {
                     OutputFile = File.ReadAllText(file);
-                    combos.Text = OutputFile;
-                    SetText();
                     var lineReader = new LineReader(() => new StringReader(OutputFile));
+                    temp = lineReader.ToList();
+                    SetText();
                     Setstatus(lineReader.Count() +" line added");
                 }
                 catch (IOException)
@@ -728,6 +641,26 @@ namespace CombolistGenerator
         }
         public void SetText()
         {
+            if (temp.Count > 500000)
+            {
+                if (combos.InvokeRequired)
+                {
+                    combos.Invoke(
+                        new MethodInvoker(delegate
+                        {
+                            combos.Text = "Too much data to show here, save it to txt";
+                            combos.SelectionStart = combos.Text.Length;
+                            combos.ScrollToCaret();
+                        }));
+                }
+                else
+                {
+                    combos.Text = "Too much data to show here, save it to txt";
+                    combos.SelectionStart = combos.Text.Length;
+                    combos.ScrollToCaret();
+                }
+                return;
+            }
             if (combos.InvokeRequired)
             {
                 combos.Invoke(new MethodInvoker(
