@@ -62,13 +62,38 @@ namespace CombolistGenerator
             }
             Stopwatch sw = new Stopwatch();
             sw.Start();
+            if (temp.Count < 2)
+            {
+                temp.Clear();
+                if (combos.InvokeRequired)
+                {
+                    combos.Invoke(
+                        new MethodInvoker(
+                            delegate
+                            {
+                                foreach (string line in new LineReader(() => new StringReader(combos.Text)))
+                                {
+                                    temp.Add(line);
+                                }
+                            }));
+                }
+                else
+                {
+                    foreach (string line in new LineReader(() => new StringReader(combos.Text)))
+                            {
+                                temp.Add(line);
+                            }
+                }
+
+                return;
+            }
             switch ((int)e.Argument)
             {
                 case 1:
                     #region Generatepw
 
                     OutputFile = "";
-                    if (temp.Count<2)
+                    if (temp.Count < 2)
                     {
                         if (combos.InvokeRequired)
                         {

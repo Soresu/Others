@@ -61,8 +61,10 @@
             // 
             // combos
             // 
+            this.combos.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.combos.Location = new System.Drawing.Point(12, 12);
             this.combos.Name = "combos";
+            this.combos.ReadOnly = true;
             this.combos.Size = new System.Drawing.Size(212, 314);
             this.combos.TabIndex = 0;
             this.combos.TabStop = false;
