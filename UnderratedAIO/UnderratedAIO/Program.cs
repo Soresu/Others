@@ -10,37 +10,70 @@ using UnderratedAIO.Champions;
 
 namespace UnderratedAIO
 {
-    class Program
+    internal class Program
     {
         public static Obj_AI_Hero player = ObjectManager.Player;
         public static string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        static void Main(string[] args)
+
+        private static void Main(string[] args)
         {
             CustomEvents.Game.OnGameLoad += OnGameLoad;
         }
 
         private static void OnGameLoad(EventArgs args)
         {
-          try
-          {
-              switch (player.ChampionName)
-              {
-                  case "ChoGath"  :
-                      Chogath chogath=new Chogath();
-                      break;
-                  case "Volibear":
-                      Volibear Volibear = new Volibear();
-                      break;
-                  default:
-                      Other other=new Other();
-                      break;
-              }
-
-          }
-          catch (Exception e)
-          {
-              Console.WriteLine(e.ToString());
-          }
+            try
+            {
+                switch (player.ChampionName)
+                {
+                    case "ChoGath":
+                        Chogath Chogath = new Chogath();
+                        break;
+                    case "Evelynn":
+                        Evelynn Evelynn = new Evelynn();
+                        break;
+                    case "Fiora":
+                        Fiora Fiora = new Fiora();
+                        break;
+                    case "Garen":
+                        Garen Garen = new Garen();
+                        break;
+                    case "Kennen":
+                        Kennen Kennen = new Kennen();
+                        break;
+                    case "Maokai":
+                        Maokai Maokai = new Maokai();
+                        break;
+                    case "Mordekaiser":
+                        Mordekaiser Mordekaiser = new Mordekaiser();
+                        break;
+                    case "Poppy":
+                        Poppy Poppy = new Poppy();
+                        break;
+                    case "Renekton":
+                        Renekton Renekton = new Renekton();
+                        break;
+                    case "Sejuani":
+                        Sejuani Sejuani = new Sejuani();
+                        break;
+                    case "Shen":
+                        Shen Shen = new Shen();
+                        break;
+                    case "Volibear":
+                        Volibear Volibear = new Volibear();
+                        break;
+                    case "Yorick":
+                        Yorick Yorick = new Yorick();
+                        break;
+                    default:
+                        Other Other = new Other();
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
     }
 }
