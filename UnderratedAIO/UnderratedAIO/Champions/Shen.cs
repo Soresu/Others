@@ -41,6 +41,7 @@ namespace UnderratedAIO.Champions
             Interrupter2.OnInterruptableTarget += OnPossibleToInterrupt;
             Obj_AI_Base.OnDamage += Obj_AI_Base_OnDamage;
             Jungle.setSmiteSlot();
+            Utility.HpBarDamageIndicator.DamageToUnit = ComboDamage;
 
         }
 
@@ -74,7 +75,6 @@ namespace UnderratedAIO.Champions
             Helpers.Jungle.ShowSmiteStatus(config.Item("useSmite").GetValue<KeyBind>().Active, config.Item("smiteStatus").GetValue<bool>());
             if (config.Item("drawallyhp").GetValue<bool>()) DrawHealths();
             if (config.Item("drawincdmg").GetValue<bool>()) getIncDmg();
-            Utility.HpBarDamageIndicator.DamageToUnit = ComboDamage;
             Utility.HpBarDamageIndicator.Enabled = config.Item("drawcombo").GetValue<bool>();          
         }
         private static void DrawHealths()

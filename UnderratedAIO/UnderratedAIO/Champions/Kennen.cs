@@ -31,6 +31,7 @@ namespace UnderratedAIO.Champions
             Game.PrintChat("<font color='#9933FF'>Soresu </font><font color='#FFFFFF'>- Kennen</font>");
             Game.OnUpdate += Game_OnGameUpdate;
             Drawing.OnDraw += Game_OnDraw;
+            Utility.HpBarDamageIndicator.DamageToUnit = ComboDamage;
         }
 
         private void Game_OnGameUpdate(EventArgs args)
@@ -204,7 +205,6 @@ namespace UnderratedAIO.Champions
             DrawHelper.DrawCircle(config.Item("drawee").GetValue<Circle>(), W.Range);
             DrawHelper.DrawCircle(config.Item("drawrr").GetValue<Circle>(), R.Range);
             DrawHelper.DrawCircle(config.Item("drawrrr").GetValue<Circle>(), config.Item("userrange").GetValue<Slider>().Value);
-            Utility.HpBarDamageIndicator.DamageToUnit = ComboDamage;
             Utility.HpBarDamageIndicator.Enabled = config.Item("drawcombo").GetValue<bool>();
         }
 
