@@ -8,13 +8,13 @@
 // ==/UserScript==
 
 //You can change the settings here
-var refreshingTimeInSeconds=60; // Default time, you can change with gui
+var refreshingTimeInSeconds=60; // Default time, you can change with the GUI
 var CheckNotification=true; // Notifications with the globe icon
 var CheckMessage=true; // Notifications with the mail icon
 var directUrlForAlerSound='https://raw.githubusercontent.com/Soresu/Others/master/Sounds/DefaultAlert.mp3'; // Notification sound
 var SoundVolume=1.0; // Notification volume
-var NamesToCheckInShoutBox = ["Joduskame", "Soresu", "jQuery"];// Sound alert if the ShoutBox contains the name and you doing something else.
-//Don't change the next lines 
+var NamesToCheckInShoutBox = ["Joduskame", "Exploit", "Myname"];// Sound alert if the ShoutBox contains the keyword
+//Don't change the next lines
 
 
 var timeoutID;
