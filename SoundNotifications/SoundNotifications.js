@@ -13,7 +13,7 @@ var CheckNotification=true; // Notifications with the globe icon
 var CheckMessage=true; // Notifications with the mail icon
 var directUrlForAlerSound='https://raw.githubusercontent.com/Soresu/Others/master/Sounds/DefaultAlert.mp3'; // Notification sound
 var SoundVolume=1.0; // Notification volume
-var NamesToCheckInShoutBox = ["Joduskame", "Exploit", "Myname"];// Sound alert if the ShoutBox contains the keyword
+var NamesToCheckInShoutBox = ["Joduskame", "Exploit", "MyName"];// Sound alert if the ShoutBox contains the keyword, you can add more if you want
 //Don't change the next lines
 
 
@@ -53,6 +53,9 @@ function SetMenu() {
    
   }
    refreshingTimeInSeconds=document.getElementById('RefreshInterval').value;
+    if(refreshingTimeInSeconds<5){
+        refreshingTimeInSeconds=10;
+    }
 }
 function SoundEnabled() {
    return document.getElementById('IsSoundEnabled').checked;
