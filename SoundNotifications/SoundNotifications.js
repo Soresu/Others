@@ -12,12 +12,13 @@ var refreshingTimeInSeconds=60; // Default time, you can change with the GUI
 var CheckNotification=true; // Notifications with the globe icon
 var CheckMessage=true; // Notifications with the mail icon
 var directUrlForAlerSound='https://raw.githubusercontent.com/Soresu/Others/master/Sounds/DefaultAlert.mp3'; // Notification sound
-var SoundVolume=1.0; // Notification volume
-var NamesToCheckInShoutBox = ["Joduskame", "Exploit", "MyName"];// Sound alert if the ShoutBox contains the keyword, you can add more if you want
+var SoundVolume=1.0; // Notification volume, between 0 and 1.0
+var NamesToCheckInShoutBox = ["Joduskame", "Exploit", "MyName"];// Sound alert if the ShoutBox contains the keyword
 //Don't change the next lines
 
 
 var timeoutID;
+var checked=false;
 var player = document.createElement('audio');
 var InitialNames=0;
 var MenuAddon='<li><input id="IsSoundEnabled" style="line-height: 30px;outline: medium none;height: 30px;margin: 7px 8px 0px 2px;background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.3);box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset;padding: 0px 8px;float: right;color: #FFF;" name="Shoutbox" value="1" type="checkbox">ShoutBox sounds: </li><li><input id="RefreshInterval" style="line-height: 30px;outline: medium none;height: 25px;width: 20px;margin: 7px 2px;background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.3);box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset;padding: 2px 2px;float: right;color: #FFF; text-align:center; border: medium none; border-radius: 3px; " name="RefreshInt" value="60" type="Text">Refresh rate: </li>';
@@ -114,8 +115,8 @@ function AddMenu() {
 }
 function goInactive() {
   var SoundAlert=false;
-  var ShoutboxText=Countnames();
-  if((Countnames()>InitialNames && SoundEnabled()) || CheckNotifications()){
+    var numberOfKeyWords=Countnames();
+  if((((checked && numberOfKeyWords>InitialNames) || (!checked && InitialNames>0 && numberOfKeyWords>=InitialNames)) && SoundEnabled()) || CheckNotifications()){
     SoundAlert=true;
   }
   if(SoundAlert){
@@ -128,6 +129,7 @@ function goInactive() {
 }
 function goActive() {
     startTimer();
+    checked=true;
 }
 function getCookie(cname) {
     var name = cname + "=";
