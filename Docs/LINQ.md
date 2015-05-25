@@ -2,10 +2,11 @@ Language Integrated Query
 ===================
 
 LINQ extends the language by the addition of query expressions, which are akin to SQL statements, and can be used to conveniently extract and process data from arrays, enumerable classes, XML documents, relational databases, and third-party data sources.
+[More information](https://msdn.microsoft.com/en-us/library/bb397926.aspx)
 
 ----------
 
-Example
+First impressions
 -------------
 Get list of integer whose value is higher than 6.
 
@@ -36,7 +37,7 @@ Get list of integer whose value is higher than 6.
 			              select number;
  	// numbersAboveSix: 7,8,9,10,11,12
 
-As you can see LINQ is much cleaner, easier to read. You can choose which method you want to use.
+As you can see LINQ is much cleaner, easier to read. You can choose which method you want to use. The drawback is that LINQ is usually slower with small collections, but as the collection is grew, LINQ will come into the wiev.
 
 ----------
 
