@@ -80,8 +80,10 @@ You can sort the data with any of its property. For example the lenght of any st
 	List<string> numbers = new List<string>(new string[] { "One", "Two", "Three", "Four","Five"});
 	var result = numbers.OrderByDescending(number => number.Length);
 	// result: "Three", "Four","Five" "One", "Two"
-	
-### Grouping(**OrderBy, OrderByDescending**)
+
+You can order with booleans too, true->1, false->0. So if you sort a collection, it will start with false(0) then it will finish with true(1).
+
+### Grouping(**GroupBy**)
 
 The group clause enables you to group your results based on a key that you specify. In this example we will separate the number 1-12 to two groups depending it's size.
 
