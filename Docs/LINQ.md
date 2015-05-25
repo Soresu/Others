@@ -116,3 +116,30 @@ Count specified elements in the collection, return as an integer.
 	int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 	var count = numbers.Count(number => number > 6);
 	//count:6
+### Check if it contains an element(**Any**)
+
+It determines if any element in a collection matches a certain condition, and it will return with true or false.
+
+	List<int> numbers = new List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
+	var example1 = numbers.Any(number => number == 6);
+	//example1: True
+	var example2 = numbers.Any(number => number > 15);
+	//example2: False
+
+----------
+
+LINQ in action
+-------------
+	// Get an enemy whom I can cast the W spell, and he is snared, stunned, taunted or he is under supression
+	var target =
+	    HeroManager.Enemies.Where(
+	        hero =>
+	            W.CanCast(hero) &&
+	            (hero.HasBuffOfType(BuffType.Snare) || hero.HasBuffOfType(BuffType.Stun) ||
+	             hero.HasBuffOfType(BuffType.Taunt) || hero.HasBuffOfType(BuffType.Suppression)))
+	        .OrderBy(h => h.Health)
+	        .FirstOrDefault();
+        if(target != null)
+        {
+        	W.Cast(target);
+        }
