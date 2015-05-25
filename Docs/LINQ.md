@@ -32,7 +32,8 @@ As you can see LINQ is much cleaner, easier to read.
 
 Basic LINQ Query Operations
 -------------
-> Getting data from source(**Select, First, FirstOrDefault**)
+
+### Getting data from source(**Select, First, FirstOrDefault**)
 
 You can get the wanted data from the collection, for example det strings's length. You can use **First** to get the first element, or **FirstOrDefault** to avoid the errors if the collectiond doesn't contains this element. 
 
@@ -46,7 +47,7 @@ You can get the wanted data from the collection, for example det strings's lengt
 	var firstWhichLengtHigherThanSeven = numbers.Where(number => number.Length>7).FirstOrDefault();
 	// firstWhichLengtHigherThanSeven: null
 
-> Filtering(**Where**)
+### Filtering(**Where**)
 
 Probably the most common query operation is to apply a filter in the form of a Boolean expression. You can use multiple conditions to get the data. 
 Get list of integer whose value is higher than 6 OR the number is even.
@@ -55,7 +56,7 @@ Get list of integer whose value is higher than 6 OR the number is even.
 	var numbersAboveSixOrEven = numbers.Where(number => number > 6 || number%2==0;
 	// numbersAboveSixOrEven : 2,4,7,8,9,10,11,12
     
-> Ordering(**OrderBy, OrderByDescending**)
+### Ordering(**OrderBy, OrderByDescending**)
 
 You can sort the data with any of its property. For example the lenght of any string.
 
@@ -63,7 +64,7 @@ You can sort the data with any of its property. For example the lenght of any st
 	var numbersOrderByDescending = numbers.OrderByDescending(number => number.Length);
 	// numbersOrderByDescending: "Three", "Four","Five" "One", "Two"
 	
-> Grouping(**OrderBy, OrderByDescending**)
+### Grouping(**OrderBy, OrderByDescending**)
 
 The group clause enables you to group your results based on a key that you specify. In this example we will separate the number 1-12 to two groups depending it's size.
 
@@ -89,7 +90,7 @@ The group clause enables you to group your results based on a key that you speci
 		Higher than 6 = True:
 		7 8 9 10 11 12
 		
-> Count specified elements(**Count**)
+### Count specified elements(**Count**)
 
 Count specified elements in the collection, return as an integer.
 
