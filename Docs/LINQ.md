@@ -8,6 +8,7 @@ LINQ extends the language by the addition of query expressions, which are akin t
 Example
 -------------
 Get list of integer whose value is higher than 6.
+
 > With foreach
 
 	List<int> numbers = new List<int>(new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
@@ -20,13 +21,22 @@ Get list of integer whose value is higher than 6.
 		}
 	}
 	// numbersAboveSix: 7,8,9,10,11,12
-> With LINQ
+	
+> With LINQ(Method syntax)
 
 	List<int> numbers = new List<int>(new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
 	var numbersAboveSix = numbers.Where(number => number > 6);
  	// numbersAboveSix: 7,8,9,10,11,12
 
-As you can see LINQ is much cleaner, easier to read.
+> With LINQ(Query syntax)
+
+	List<int> numbers = new List<int>(new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
+	var numbersAboveSix = from number in numbers 
+			      where number > 6 
+			      select number;
+ 	// numbersAboveSix: 7,8,9,10,11,12
+
+As you can see LINQ is much cleaner, easier to read. You can choose which method you want to use.
 
 ----------
 
@@ -35,18 +45,25 @@ Basic LINQ Query Operations
 
 ### Getting data from source(**Select, First, FirstOrDefault**)
 
-You can get the wanted data from the collection, for example det strings's length. You can use **First** to get the first element, or **FirstOrDefault** to avoid the errors if the collectiond doesn't contains this element. 
+You can get the wanted data from the collection, for example the strings's length. You can use **First** to get the first element, or **FirstOrDefault** to avoid from errors if the collectiond doesn't contains this element. 
 
 	List<string> numbers = new List<string>(new string[] { "One", "Two", "Three", "Four", "Five" });
+	
 	var numbersLenth = numbers.Select(number => number.Length);
 	// numbersLenth : 3,3,5,4,4
+	
 	var firstWhichLengtHigherThanThree = numbers.Where(number => number.Length>3).First();
 	// firstWhichLengtHigherThanThree: Three
+	
 	var firstWhichLengtHigherThanSeven = numbers.Where(number => number.Length>7).First();
 	// Error: There is no string which length higher than seven 
+	
 	var firstWhichLengtHigherThanSeven = numbers.Where(number => number.Length>7).FirstOrDefault();
 	// firstWhichLengtHigherThanSeven: null
-
+	
+	var firstWhichLengtHigherThanSeven = numbers.FirstOrDefault(number => number.Length>7);
+	// you can simplify the query
+	
 ### Filtering(**Where**)
 
 Probably the most common query operation is to apply a filter in the form of a Boolean expression. You can use multiple conditions to get the data. 
