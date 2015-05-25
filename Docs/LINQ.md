@@ -67,8 +67,7 @@ You can get the wanted data from the collection, for example the strings's lengt
 	
 ### Filtering(**Where**)
 
-Probably the most common query operation is to apply a filter in the form of a Boolean expression. You can use multiple conditions to get the data. 
-Get list of integer whose value is higher than 6 OR the number is even.
+Probably the most common query operation is to apply a filter in the form of a Boolean expression. You can use multiple conditions to get the data. For example list of integer whose value is higher than 6 OR the number is even.
 
 	List<int> numbers = new List<int>(new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
 	var result = numbers.Where(number => number > 6 || number%2==0;
