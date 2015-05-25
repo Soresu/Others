@@ -32,8 +32,8 @@ Get list of integer whose value is higher than 6.
 
 	List<int> numbers = new List<int>(new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
 	var numbersAboveSix = from number in numbers 
-			      where number > 6 
-			      select number;
+			              where number > 6 
+			              select number;
  	// numbersAboveSix: 7,8,9,10,11,12
 
 As you can see LINQ is much cleaner, easier to read. You can choose which method you want to use.
@@ -52,16 +52,16 @@ You can get the wanted data from the collection, for example the strings's lengt
 	var numbersLenth = numbers.Select(number => number.Length);
 	// numbersLenth : 3,3,5,4,4
 	
-	var firstWhichLengtHigherThanThree = numbers.Where(number => number.Length>3).First();
-	// firstWhichLengtHigherThanThree: Three
+	var example1 = numbers.Where(number => number.Length>3).First();
+	// example1: Three
 	
-	var firstWhichLengtHigherThanSeven = numbers.Where(number => number.Length>7).First();
+	var example2 = numbers.Where(number => number.Length>7).First();
 	// Error: There is no string which length higher than seven 
 	
-	var firstWhichLengtHigherThanSeven = numbers.Where(number => number.Length>7).FirstOrDefault();
-	// firstWhichLengtHigherThanSeven: null
+	var example3 = numbers.Where(number => number.Length>7).FirstOrDefault();
+	// example3: null
 	
-	var firstWhichLengtHigherThanSeven = numbers.FirstOrDefault(number => number.Length>7);
+	var example4 = numbers.FirstOrDefault(number => number.Length>7);
 	// you can simplify the query
 	
 ### Filtering(**Where**)
@@ -70,16 +70,16 @@ Probably the most common query operation is to apply a filter in the form of a B
 Get list of integer whose value is higher than 6 OR the number is even.
 
 	List<int> numbers = new List<int>(new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
-	var numbersAboveSixOrEven = numbers.Where(number => number > 6 || number%2==0;
-	// numbersAboveSixOrEven : 2,4,7,8,9,10,11,12
+	var result = numbers.Where(number => number > 6 || number%2==0;
+	// result : 2,4,7,8,9,10,11,12
     
 ### Ordering(**OrderBy, OrderByDescending**)
 
 You can sort the data with any of its property. For example the lenght of any string.
 
 	List<string> numbers = new List<string>(new string[] { "One", "Two", "Three", "Four","Five"});
-	var numbersOrderByDescending = numbers.OrderByDescending(number => number.Length);
-	// numbersOrderByDescending: "Three", "Four","Five" "One", "Two"
+	var result = numbers.OrderByDescending(number => number.Length);
+	// result: "Three", "Four","Five" "One", "Two"
 	
 ### Grouping(**OrderBy, OrderByDescending**)
 
