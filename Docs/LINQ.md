@@ -41,7 +41,7 @@ As you can see LINQ is much cleaner, easier to read. You can choose which method
 
 ----------
 
-Basic LINQ Query Operations
+Basic LINQ Operations
 -------------
 
 ### Getting data from source(**Select, First, FirstOrDefault**)
