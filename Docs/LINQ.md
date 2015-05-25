@@ -1,58 +1,98 @@
-Variable
+Language Integrated Query
 ===================
 
-A variable is a value that can change, depending on conditions or on information passed to the program.
+LINQ extends the language by the addition of query expressions, which are akin to SQL statements, and can be used to conveniently extract and process data from arrays, enumerable classes, XML documents, relational databases, and third-party data sources.
 
 ----------
 
 Example
 -------------
+Get list of integer whose value is higher than 6.
+> With foreach
 
-Lets create a variable that will hold the text that we will display in chat when our assembly has loaded.
+	List<int> numbers = new List<int>(new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
+	List<int> numbersAboveSix = new List<int>();
+	foreach (var number in numbers)
+	{
+		if (number>6)
+		{
+			numbersAboveSix.Add(number);
+		}
+	}
+	// numbersAboveSix: 7,8,9,10,11,12
+> With LINQ
 
-	string welcomeText = "Chevy Loaded!";
- 
-Now, lets break down piece by piece this statement to grasp a better understanding.
+	List<int> numbers = new List<int>(new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
+	var numbersAboveSix = numbers.Where(number => number > 6);
+ 	// numbersAboveSix: 7,8,9,10,11,12
 
-> string
+As you can see LINQ is much cleaner, easier to read.
 
-This is our type, it is the type of variable we're creating. In this case, it's a string. A string represents a sequence of zero or more Unicode characters. (Find more types [here](https://msdn.microsoft.com/en-us/library/s1ax56ch.aspx). Look on the left side for all of the types, click on one for examples)
+----------
 
-  >welcomeText
+Basic LINQ Query Operations
+-------------
+> Getting data from source(**Select, First, FirstOrDefault**)
 
-  This is called the "Identifier"(or the name, basically). We use this name to do other operations on the string.
+You can get the wanted data from the collection, for example det strings's length. You can use **First** to get the first element, or **FirstOrDefault** to avoid the errors if the collectiond doesn't contains this element. 
 
-  >"Chevy Loaded!";
+	List<string> numbers = new List<string>(new string[] { "One", "Two", "Three", "Four", "Five" });
+	var numbersLenth = numbers.Select(number => number.Length);
+	// numbersLenth : 3,3,5,4,4
+	var firstWhichLengtHigherThanThree = numbers.Where(number => number.Length>3).First();
+	// firstWhichLengtHigherThanThree: Three
+	var firstWhichLengtHigherThanSeven = numbers.Where(number => number.Length>7).First();
+	// Error: There is no string which length higher than seven 
+	var firstWhichLengtHigherThanSeven = numbers.Where(number => number.Length>7).FirstOrDefault();
+	// firstWhichLengtHigherThanSeven: null
 
-This sets the variable equal to something, in this case "ChevyVadeâ„¢ Loaded!". Note that the quotes wont show up when we use this variable, it just wraps up the text. All strings must start with a quote, and end with one. In addition, **all statements must end with a semi-colon.**
+> Filtering(**Where**)
 
-**Good**:
+Probably the most common query operation is to apply a filter in the form of a Boolean expression. You can use multiple conditions to get the data. 
+Get list of integer whose value is higher than 6 OR the number is even.
 
-    string train = "ChewChewww";
+	List<int> numbers = new List<int>(new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
+	var numbersAboveSixOrEven = numbers.Where(number => number > 6 || number%2==0;
+	// numbersAboveSixOrEven : 2,4,7,8,9,10,11,12
+    
+> Ordering(**OrderBy, OrderByDescending**)
 
-**Bad**:
+You can sort the data with any of its property. For example the lenght of any string.
 
-    string train = ChewChewww;
+	List<string> numbers = new List<string>(new string[] { "One", "Two", "Three", "Four","Five"});
+	var numbersOrderByDescending = numbers.OrderByDescending(number => number.Length);
+	// numbersOrderByDescending: "Three", "Four","Five" "One", "Two"
+	
+> Grouping(**OrderBy, OrderByDescending**)
 
+The group clause enables you to group your results based on a key that you specify. In this example we will separate the number 1-12 to two groups depending it's size.
 
-We can use these variables for Methods, something we'll get into later, and change their values.
+	// Initial array
+	int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+	// Get the groups
+	var groups = numbers.GroupBy(number => number > 6);
+	// Loop over groups.
+	foreach (var group in groups)
+	{
+		// Display key for group.
+		Console.WriteLine("Higher than 6 = {0}:", group.Key);
+		foreach (var value in group)
+		{
+			// Display values in group.
+			Console.Write("{0} ", value);
+		}
+		Console.WriteLine();
+	}
+	Output:
+		Higher than 6 = False:
+		1 2 3 4 5 6
+		Higher than 6 = True:
+		7 8 9 10 11 12
+		
+> Count specified elements(**Count**)
 
-    string train = "ChewChewww";
-    Console.WriteLine(train);
-    train += " Train";
-    Console.WriteLine(train);
+Count specified elements in the collection, return as an integer.
 
-First, we declare our variable, labeled train. `Console.WriteLine` writes a line of text to the console. (To see this in-game, enable Developer Console in the loader). Next, we use the `+=` operator, which appends a value **of the same type** to the variable. In this case, it's simply putting ` Train` at the end of the string.
-
-When we run this, the console should display this:   
-
-	ChewChewww
-	ChewChewww Train
-
-Some helpful variables:
-
-| Name of Type |         Description        |        Example       |
-|:------------:|:--------------------------:|:--------------------:|
-|     float    | Any number, with decimals. |   float x = 0.03f;   |
-|    boolean   |      True/False only.      | bool lagging = true; |
-|      int     |      Any whole number      |     int cats = 0;    |
+	int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+	var count = numbers.Count(number => number > 6);
+	//count:6
