@@ -102,7 +102,7 @@ Click on the **Bulid** tab, then **Build Solution**
 
 ![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/3.jpg "Step five") 
 
-If you did everything fine, it should build the project succesfully.
+If you did everything fine, it should build the project successfully.
 
 ![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/3_5.jpg "Step five2")
 
