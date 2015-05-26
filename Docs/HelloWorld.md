@@ -71,12 +71,12 @@ When you run the program it will start the Main method.
 ```
 The System namespace contains the Console class and the WriteLine method.
 
-If you would run this program now, after the console shows up, it will close immediately after programe write the text. To avoid this problem add the fallowing ines too. It will wait until you press a key.
+If you would run this program now, after the console shows up, it would close immediately after programe write the text. To avoid this problem add the fallowing ines too. It will wait until you press a key.
 ```
   Console.WriteLine("Hello World");
   Console.ReadKey();
 ```
-You should see this
+You should see this.
 ```
 using System;
 using System.Collections.Generic;
@@ -111,7 +111,7 @@ You can run the .exe file also, the path is in the **Output console**
 
 ![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/3_6.jpg "Step Omega")
 
-And of course you can add this project to the League Sharp too. But dont forget to enable the debug console in the options.
+And of course you can add this project to the League Sharp too. But don't forget to enable the debug console in the options.
 
 ![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/LS.jpg "Step LeaguesSharp")
 
