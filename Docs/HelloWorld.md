@@ -110,4 +110,8 @@ If you did everything fine, it should build the project succesfully.
 Finally to run the project, go to the **Debug tab** then clock on **Start Debugging** or **Press F5**.
 You can run the .exe file also, the path is in the **Output console**
 
+![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/3_6.jpg "Step Omega")
+
+Congratulations for your first program.
+
 ![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/4.jpg "Step Omega")
