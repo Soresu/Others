@@ -26,7 +26,7 @@ There shouldn't be any special character in the location path also.
 In our case we have:
 
 ```
-// By double slash you can write comments
+// With double slash you can write comments
 
 // The using keyword is used to include the other namespaces in the program and use their classes
 using System; // For this project, we only need this, but you can keep the others
@@ -102,16 +102,16 @@ Click on the **Bulid** tab, then **Build Solution**
 
 ![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/3.jpg "Step five") 
 
-If you did everything fine, it should build the project successfully.
+If you did everything fine, it should build the project successfully. You can check it in the **Output window**.
 
 ![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/3_5.jpg "Step five2")
 
-Finally to run the project, go to the **Debug tab** then clock on **Start Debugging** or **Press F5**.
-You can run the .exe file also, the path is in the **Output console**
+Finally to run the project, go to the **Debug tab** then click on **Start Debugging** or **Press F5**.
+You can run the .exe file also, the path is in the **Output window**
 
 ![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/3_6.jpg "Step Omega")
 
-And of course you can add this project to the League Sharp too. But don't forget to enable the debug console in the options.
+And of course you can add this project to the LeagueSharp too. But don't forget to enable the debug console in the options.
 
 ![alt text](https://raw.githubusercontent.com/Soresu/Others/master/Images/Docs/Hello_World/LS.jpg "Step LeaguesSharp")
 
