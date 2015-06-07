@@ -74,7 +74,8 @@ var result6 = Math.Ceiling(12.2);   // result6 = 13;
 var result7 = Math.Floor(12.8);     // result7 = 12;
 var result8 = Math.Floor(12.2);     // result8 = 12;
 
-// Sign - It will determine that the number is positive or negative  It returns one of three values: -1, 0 or 1.
+// Sign - It will determine that the number is positive or negative  
+// It returns one of three values: -1, 0 or 1.
 var result9 = Math.Max(5.5);          // result9  = 1;
 var result10 = Math.Min(0);         // result10 = 0;
 var result11 = Math.Min(-5.5);        // result11 = -1;
