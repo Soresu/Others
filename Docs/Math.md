@@ -79,4 +79,4 @@ var result9 = Math.Max(5.5);          // result9  = 1;
 var result10 = Math.Min(0);         // result10 = 0;
 var result11 = Math.Min(-5.5);        // result11 = -1;
 ```
-You can also find some method what can be familiar from school. Like **Sin**, **Cos**, **Tan**, **Sqrt**, **Pow**,
+You can also find some method what can be familiar from school. Like **Sin**, **Cos**, **Tan**, **Sqrt**, **Pow**, or **PI**
