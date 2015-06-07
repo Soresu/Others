@@ -19,7 +19,7 @@ Most of these you had to learn in school, so it shouldn't be so hard
 |      %       |      Divide two numbers and returns reminder      |  22%10=2  |
 
 
-It's important to remember that you always have to check the type of the variable.
+It's important to remember that you always have to check the type of the variable:
 
 ```
 int a = 7;
@@ -32,13 +32,13 @@ float result3 = (float) a / b;  // result3 = 3.5;
 ### Increment and Decrement Operators
 You can increase or decrease the variable's number by one with ++ or --
 
-All of these command do the same thing
+All of these command do the same thing:
 ```
 a = a + 1;
 a++;
 ++a;
 ```
-The operators can be placed before the variable to be adjusted (prefix) or after it (postfix).
+The operators can be placed before the variable to be adjusted (prefix) or after it (postfix):
 ```
 int a;
 int b;
