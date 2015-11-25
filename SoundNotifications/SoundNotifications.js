@@ -13,14 +13,20 @@ var CheckNotification=true; // Notifications with the globe icon
 var CheckMessage=true; // Notifications with the mail icon
 var directUrlForAlerSound='https://raw.githubusercontent.com/Soresu/Others/master/Sounds/DefaultAlert.mp3'; // Notification sound
 var SoundVolume=1.0; // Notification volume, between 0 and 1.0
-var NamesToCheckInShoutBox = ["Joduskame", "Exploit", "MyName"];// Sound alert if the ShoutBox contains the keyword
+var NamesToCheckInShoutBox = ["Soresu"]; // Sound alert if the ShoutBox contains the keyword
+var OutdatedString = "Maintenance"; // The word which means L# is outdated, Case sensitive
+var CurrentMaintenanceNumber = 2; // Number of the current "OutdatedString" string in the status bar, if it will be less(changed to updated), this will alert
 //Don't change the next lines
+
+
 
 var timeoutID;
 var player = document.createElement('audio');
 var InitialNames=0;
 var shoutboxAlert=false;
-var MenuAddon='<li><input id="IsSoundEnabled" style="line-height: 30px;outline: medium none;height: 30px;margin: 7px 8px 0px 2px;background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.3);padding: 0px 8px;float: right;color: #FFF;" name="Shoutbox" value="1" type="checkbox">ShoutBox sounds: </li><li><input id="RefreshInterval" style="line-height: 30px;outline: medium none;height: 25px;width: 20px;margin: 7px 2px;background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.3);box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset;padding: 2px 2px;float: right;color: #FFF; text-align:center; border: medium none; border-radius: 3px; " name="RefreshInt" value="60" type="Text">Refresh rate: </li>';
+var MenuAddon='<li><input id="NotOnUpdate" style="line-height: 30px;outline: medium none;height: 30px;margin: 7px 8px 0px 2px;background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.3);padding: 0px 8px;float: right;color: #FFF;" name="Shoutbox" value="1" type="checkbox">Alert on Update: </li>'+
+              '<li><input id="IsSoundEnabled" style="line-height: 30px;outline: medium none;height: 30px;margin: 7px 8px 0px 2px;background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.3);padding: 0px 8px;float: right;color: #FFF;" name="Shoutbox" value="1" type="checkbox">ShoutBox sounds: </li>'+
+              '<li><input id="RefreshInterval" style="line-height: 30px;outline: medium none;height: 25px;width: 20px;margin: 7px 2px;background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.3);box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset;padding: 2px 2px;float: right;color: #FFF; text-align:center; border: medium none; border-radius: 3px; " name="RefreshInt" value="60" type="Text">Refresh rate: </li>';
 
 function setup() {
     this.addEventListener("mousemove", resetTimer, false);
@@ -37,7 +43,8 @@ function setup() {
 setup();
 window.onbeforeunload = function(){
   document.cookie="RefreshInterval="+document.getElementById('RefreshInterval').value+"; expires=Thu, 18 Dec 2020 12:00:00 UTC";
-     document.cookie="IsSoundEnabled="+document.getElementById("IsSoundEnabled").checked+"; expires=Thu, 18 Dec 2020 12:00:00 UTC";
+  document.cookie="IsSoundEnabled="+document.getElementById("IsSoundEnabled").checked+"; expires=Thu, 18 Dec 2020 12:00:00 UTC";
+  document.cookie="NotOnUpdate="+document.getElementById("NotOnUpdate").checked+"; expires=Thu, 18 Dec 2020 12:00:00 UTC";
 };
 function SetMenu() {
   if(getCookie("RefreshInterval").length>0){
@@ -49,6 +56,14 @@ function SetMenu() {
           document.getElementById("IsSoundEnabled").checked=true; 
       }else{
          document.getElementById("IsSoundEnabled").checked=false;  
+      }
+  }
+  var notBool=getCookie("NotOnUpdate");
+  if(notBool.length>0){
+      if(notBool.toLowerCase()=="true"){
+          document.getElementById("NotOnUpdate").checked=true; 
+      }else{
+         document.getElementById("NotOnUpdate").checked=false;  
       }
   }
    refreshingTimeInSeconds=document.getElementById('RefreshInterval').value;
@@ -67,6 +82,9 @@ function getLasShoutBoxMessageTime(tr){
 }
 function SoundEnabled() {
    return document.getElementById('IsSoundEnabled').checked;
+}
+function NotOnUpdate() {
+   return document.getElementById('NotOnUpdate').checked;
 }
 function AddMenu() {
    var NavBar=document.getElementById('user_navigation').getElementsByTagName('ul')[0];
@@ -130,6 +148,14 @@ function CheckNotifications() {
         if((globeIcon.match(reg) || []).length>0){
           shouldNotify=true;
         }
+    }
+    if(NotOnUpdate){
+        var statusBar=document.getElementById('gm_1').innerHTML;
+        if((statusBar.match(new RegExp(OutdatedString, "g")) || []).length<CurrentMaintenanceNumber){
+            alert((statusBar.match(new RegExp(OutdatedString, "g")) || []).length)
+            shouldNotify=true;
+        }
+
     }
     return shouldNotify;
 }
