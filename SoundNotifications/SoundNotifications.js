@@ -152,7 +152,6 @@ function CheckNotifications() {
     if(NotOnUpdate){
         var statusBar=document.getElementById('gm_1').innerHTML;
         if((statusBar.match(new RegExp(OutdatedString, "g")) || []).length<CurrentMaintenanceNumber){
-            alert((statusBar.match(new RegExp(OutdatedString, "g")) || []).length)
             shouldNotify=true;
         }
 
