@@ -14,7 +14,7 @@ var CheckMessage=true; // Notifications with the mail icon
 var directUrlForAlerSound='https://raw.githubusercontent.com/Soresu/Others/master/Sounds/DefaultAlert.mp3'; // Notification sound
 var SoundVolume=1.0; // Notification volume, between 0 and 1.0
 var NamesToCheckInShoutBox = ["Soresu"]; // Sound alert if the ShoutBox contains the keyword
-var OutdatedString = "Maintenance"; // The word which means L# is outdated, Case sensitive
+var OutdatedString = "Outdated"; // The word which means L# is outdated, Case sensitive
 var CurrentMaintenanceNumber = 2; // Number of the current "OutdatedString" string in the status bar, if it will be less(changed to updated), this will alert
 //Don't change the next lines
 
